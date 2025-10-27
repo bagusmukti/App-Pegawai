@@ -33,6 +33,14 @@
             <td>{{ $employee->tanggal_masuk }}</td>
         </tr>
         <tr>
+            <th>Departemen</th>
+            <td>{{ $employee->department->nama_departemen ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <th>Jabatan</th>
+            <td>{{ $employee->position->nama_jabatan ?? 'N/A' }}</td>
+        </tr>
+        <tr>
             <th>Status</th>
             <td>{{ $employee->status }}</td>
         </tr>

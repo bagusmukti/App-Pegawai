@@ -31,9 +31,33 @@
                 <td>Alamat</td>
                 <td><input type="text" name="alamat" value="{{ old('alamat', $employee->alamat) }}"></td>
             </tr>
-            <tr>
+           <tr>
                 <td>Tanggal Masuk</td>
                 <td><input type="date" name="tanggal_masuk" value="{{ old('tanggal_masuk', $employee->tanggal_masuk) }}"></td>
+            </tr>
+            <tr>
+                <td>Departemen</td>
+                <td>
+                <select name="departemen_id" id="departemen_id" required>
+                    @foreach($departments as $dept)
+                        <option value="{{ $dept->id }}" {{ old('departemen_id', $employee->departemen_id) == $dept->id ? 'selected' : '' }}>
+                            {{ $dept->nama_departemen }}
+                        </option>
+                    @endforeach
+                </select>
+            </td>
+            </tr>
+                <tr>
+                <td>Jabatan</td>
+                <td>
+                <select name="jabatan_id" id="jabatan_id" required>
+                    @foreach($positions as $pos)
+                        <option value="{{ $pos->id }}" {{ old('jabatan_id', $employee->jabatan_id) == $pos->id ? 'selected' : '' }}>
+                            {{ $pos->nama_jabatan }}
+                        </option>
+                    @endforeach
+                </select>
+            </td>
             </tr>
             <tr>
                 <td>Status</td>
