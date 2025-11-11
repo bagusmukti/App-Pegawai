@@ -26,9 +26,9 @@
                     <th>Nama Karyawan</th>
                     <th>Bulan</th>
                     <th>Gaji Pokok</th>
-                    <th>Tunjangan</th>
+                    {{-- <th>Tunjangan</th>
                     <th>Potongan</th>
-                    <th>Total Gaji</th>
+                    <th>Total Gaji</th> --}}
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -38,9 +38,9 @@
                         <td>{{ $sal->employee->nama_lengkap ?? 'N/A' }}</td>
                         <td>{{ $sal->bulan }}</td>
                         <td>{{ $sal->gaji_pokok }}</td>
-                        <td>{{ $sal->tunjangan }}</td>
+                        {{-- <td>{{ $sal->tunjangan }}</td>
                         <td>{{ $sal->potongan }}</td>
-                        <td>{{ $sal->total_gaji }}</td>
+                        <td>{{ $sal->total_gaji }}</td> --}}
                         <td>
                             <div class="action-cell">
                                 <a href="{{ route('salaries.show', $sal->id) }}" class="action-link-detail">Detail</a> |

@@ -22,9 +22,12 @@
             <ul>
                 <li><a href="{{ url('/employees') }}">Employee</a></li>
                 <li><a href="{{ url('/departments') }}">Department</a></li>
-                <li><a href="{{ url('/attendance') }}">Attendance</a></li>
+                <li><a href="{{ url('/attendance') }}">Attendance List</a></li>
+                <li><a href="{{ route('attendance.check') }}">Attendance Check</a></li>
                 <li><a href="{{ url('/salaries') }}">Salaries</a></li>
+                <li><a href="{{ route('payroll.index') }}">Payroll</a></li>
                 <li><a href="{{ url('/positions') }}">Positions</a></li>
+                <li><a href="{{ url('/payroll') }}">Payroll</a></li>
                 <li><a href="{{ url('/report') }}">Report</a></li>
                 <li><a href="{{ url('/settings') }}">Settings</a></li>
             </ul>

@@ -10,9 +10,9 @@ class Salaries extends Model
         'karyawan_id',
         'bulan',
         'gaji_pokok',
-        'tunjangan',
-        'potongan',
-        'total_gaji',
+        // 'tunjangan',
+        // 'potongan',
+        // 'total_gaji',
     ];
 
     // Relasi ke Employee

@@ -43,6 +43,77 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.index');
     }
 
+    public function check(Request $request)
+    {
+        $employeeId = $request->query('karyawan_id');
+        $employees = Employee::all();
+
+        $todayAttendance = null;
+        if ($employeeId) {
+            $todayAttendance = Attendance::where('karyawan_id', $employeeId)
+                ->whereDate('tanggal', now())
+                ->first();
+        }
+
+        return view('attendances.check', compact('todayAttendance', 'employees', 'employeeId'));
+    }
+
+    public function storeMasuk(Request $request)
+    {
+        $data = $request->validate([
+            'karyawan_id' => 'required|exists:employees,id',
+        ]);
+
+        $existing = Attendance::where('karyawan_id', $data['karyawan_id'])
+            ->whereDate('tanggal', now())
+            ->first();
+
+        if ($existing && $existing->waktu_masuk) {
+            return back()->with('error', 'Anda sudah absen masuk hari ini.');
+        }
+
+        if ($existing) {
+            $existing->update([
+                'waktu_masuk' => now()->toTimeString(),
+                'status_absensi' => 'hadir',
+            ]);
+        } else {
+            Attendance::create([
+                'karyawan_id' => $data['karyawan_id'],
+                'tanggal' => now()->toDateString(),
+                'waktu_masuk' => now()->toTimeString(),
+                'status_absensi' => 'hadir',
+            ]);
+        }
+
+        return back()->with('success', 'Absen masuk berhasil!');
+    }
+
+    public function storeKeluar(Request $request)
+    {
+        $data = $request->validate([
+            'karyawan_id' => 'required|exists:employees,id',
+        ]);
+
+        $attendance = Attendance::where('karyawan_id', $data['karyawan_id'])
+            ->whereDate('tanggal', now())
+            ->first();
+
+        if (!$attendance || !$attendance->waktu_masuk) {
+            return back()->with('error', 'Absen masuk belum tercatat untuk hari ini.');
+        }
+
+        if ($attendance->waktu_keluar) {
+            return back()->with('error', 'Anda sudah absen pulang hari ini.');
+        }
+
+        $attendance->update([
+            'waktu_keluar' => now()->toTimeString(),
+        ]);
+
+        return back()->with('success', 'Absen pulang berhasil!');
+    }
+
     /**
      * Display the specified resource.
      */

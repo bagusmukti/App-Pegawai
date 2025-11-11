@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->unsignedBigInteger('departemen_id')->after('tanggal_masuk');
-            $table->unsignedBigInteger('jabatan_id')->after('departemen_id');
+            // $table->unsignedBigInteger('departemen_id')->after('tanggal_masuk');
+            // $table->unsignedBigInteger('jabatan_id')->after('departemen_id');
 
-            $table->foreign('departemen_id')
-                    ->references('id')
-                    ->on('departments')
-                    ->onDelete('cascade');
-            $table->foreign('jabatan_id')
-                    ->references('id')
-                    ->on('positions')
-                    ->onDelete('cascade');
+            // $table->foreign('departemen_id')
+            //         ->references('id')
+            //         ->on('departments')
+            //         ->onDelete('cascade');
+            // $table->foreign('jabatan_id')
+            //         ->references('id')
+            //         ->on('positions')
+            //         ->onDelete('cascade');
         });
     }
 
@@ -32,9 +32,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->dropForeign(['departemen_id']);
-            $table->dropForeign(['jabatan_id']);
-            $table->dropForeign(['departemen_id', 'jabatan_id']);
+            // $table->dropForeign(['departemen_id']);
+            // $table->dropForeign(['jabatan_id']);
+            // $table->dropForeign(['departemen_id', 'jabatan_id']);
         });
     }
 };

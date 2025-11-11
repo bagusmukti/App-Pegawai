@@ -29,7 +29,7 @@
                 <th>Gaji Pokok</th>
                 <td>{{ $salaries->gaji_pokok }}</td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th>Tunjangan</th>
                 <td>{{ $salaries->tunjangan }}</td>
             </tr>
@@ -40,7 +40,7 @@
             <tr>
                 <th>Total Gaji</th>
                 <td>{{ $salaries->total_gaji }}</td>
-            </tr>
+            </tr> --}}
         </table>
         <div class="detail-actions">
             <a href="{{ route('salaries.index') }}" class="btn btn-secondary">Kembali ke Daftar</a>

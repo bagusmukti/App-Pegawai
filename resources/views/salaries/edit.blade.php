@@ -43,7 +43,7 @@
                     <td><input type="text" name="gaji_pokok" id="gaji_pokok" class="form-input" readonly
                             value="{{ old('gaji_pokok', $salaries->gaji_pokok) }}"></td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <td>Tunjangan</td>
                     <td><input type="text" name="tunjangan" id="tunjangan" class="form-input"
                             value="{{ old('tunjangan', $salaries->tunjangan) }}"></td>
@@ -57,7 +57,7 @@
                     <td>Total Gaji</td>
                     <td><input type="text" name="total_gaji" id="total_gaji" class="form-input"
                             value="{{ old('total_gaji', $salaries->total_gaji) }}"></td>
-                </tr>
+                </tr> --}}
                 <tr>
                     <td></td>
                     <td class="form-table-actions">
@@ -66,7 +66,7 @@
                 </tr>
             </table>
         </form>
-        <script>
+        {{-- <script>
             const karyawanSelect = document.getElementById('karyawan_id');
             const gajiPokokInput = document.getElementById('gaji_pokok');
             const tunjanganInput = document.getElementById('tunjangan');
@@ -83,7 +83,7 @@
 
             tunjanganInput.addEventListener('input', calculateTotal);
             potonganInput.addEventListener('input', calculateTotal);
-        </script>
+        </script> --}}
     @endsection
 </body>
 

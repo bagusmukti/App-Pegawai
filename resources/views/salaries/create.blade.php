@@ -49,7 +49,7 @@
                     <td><label for="gaji_pokok">Gaji Pokok:</label></td>
                     <td><input type="text" id="gaji_pokok" name="gaji_pokok" class="form-input" readonly></td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <td><label for="tunjangan">Tunjangan:</label></td>
                     <td><input type="text" id="tunjangan" name="tunjangan" class="form-input"></td>
                 </tr>
@@ -62,7 +62,7 @@
                     <td>
                         <textarea id="total_gaji" name="total_gaji" class="form-input"></textarea>
                     </td>
-                </tr>
+                </tr> --}}
                 <tr>
                     <td></td>
                     <td class="form-table-actions">
@@ -71,13 +71,13 @@
                 </tr>
             </table>
         </form>
-        <script>
+        {{-- <script>
             // 1. Definisikan elemen-elemen form yang kita perlukan
             const karyawanSelect = document.getElementById('karyawan_id');
             const gajiPokokInput = document.getElementById('gaji_pokok');
             const tunjanganInput = document.getElementById('tunjangan');
             const potonganInput = document.getElementById('potongan');
-            const totalGajiOutput = document.getElementById('total_gaji'); // Ini adalah textarea
+            const totalGajiOutput = document.getElementById('total_gaji'); 
 
             // 2. Buat fungsi untuk menghitung total gaji
             function calculateTotal() {
@@ -114,7 +114,7 @@
             // Kita pakai event 'input' agar kalkulasi berjalan setiap kali ada ketikan
             tunjanganInput.addEventListener('input', calculateTotal);
             potonganInput.addEventListener('input', calculateTotal);
-        </script>
+        </script> --}}
     @endsection
 </body>
 

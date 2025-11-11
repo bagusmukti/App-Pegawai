@@ -35,9 +35,9 @@ class SalariesController extends Controller
             'karyawan_id'   => 'required|exists:employees,id',
             'bulan'         => 'required|string|max:25',
             'gaji_pokok'    => 'required|numeric|min:0',
-            'tunjangan'     => 'required|numeric|min:0',
-            'potongan'      => 'required|numeric|min:0',
-            'total_gaji'    => 'required|numeric|min:0',
+            // 'tunjangan'     => 'required|numeric|min:0',
+            // 'potongan'      => 'required|numeric|min:0',
+            // 'total_gaji'    => 'required|numeric|min:0',
 
         ]);
         Salaries::create($request->all());
@@ -72,9 +72,9 @@ class SalariesController extends Controller
             'karyawan_id'   => 'required|exists:employees,id',
             'bulan'         => 'required|string|max:25',
             'gaji_pokok'    => 'required|numeric|min:0',
-            'tunjangan'     => 'required|numeric|min:0',
-            'potongan'      => 'required|numeric|min:0',
-            'total_gaji'    => 'required|numeric|min:0',
+            // 'tunjangan'     => 'required|numeric|min:0',
+            // 'potongan'      => 'required|numeric|min:0',
+            // 'total_gaji'    => 'required|numeric|min:0',
         ]);
         $salaries = Salaries::findOrFail($id);
         $salaries->update($request->all());
