@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
+    protected $table = 'employees';
+
     protected $fillable = [
         'nama_lengkap',
         'email',
+        'password',
         'nomor_telepon',
         'tanggal_lahir',
         'alamat',
@@ -16,7 +19,10 @@ class Employee extends Model
         'departemen_id',
         'jabatan_id',
         'status',
+        'role',
     ];
+
+    protected $hidden = ['password'];
 
     //Relasi ke Department
     public function department()

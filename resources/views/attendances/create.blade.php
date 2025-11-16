@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form class="form-container" action="{{ route('attendance.store') }}" method="POST">
+        <form class="form-container" action="{{ route('admin.attendance.store') }}" method="POST">
             @csrf
             <table class="form-table">
                 <tr>
@@ -57,6 +57,9 @@
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </td>
                 </tr>
+                <div class="detail-actions">
+                    <a href="{{ route('admin.attendance.index') }}" class="btn btn-secondary">Kembali ke Daftar</a>
+                </div>
             </table>
         </form>
     @endsection

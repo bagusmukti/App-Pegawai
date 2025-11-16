@@ -24,6 +24,10 @@
                 <td>{{ $employee->email }}</td>
             </tr>
             <tr>
+                <th>Passwordl</th>
+                <td>{{ $employee->password }}</td>
+            </tr>
+            <tr>
                 <th>Nomor Telepon</th>
                 <td>{{ $employee->nomor_telepon }}</td>
             </tr>
@@ -50,6 +54,10 @@
             <tr>
                 <th>Status</th>
                 <td>{{ $employee->status }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ $employee->role }}</td>
             </tr>
         </table>
         <div class="form-actions" style="text-align: left; max-width: 700px;">

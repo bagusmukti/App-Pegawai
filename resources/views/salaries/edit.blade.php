@@ -64,6 +64,9 @@
                         <button type="submit" class="btn btn-primary">Update</button>
                     </td>
                 </tr>
+                 <div class="detail-actions">
+                    <a href="{{ route('salaries.index') }}" class="btn btn-secondary">Kembali ke Daftar</a>
+                </div>
             </table>
         </form>
         {{-- <script>

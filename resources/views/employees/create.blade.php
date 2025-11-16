@@ -36,6 +36,10 @@
                     <td><input type="email" id="email" name="email" class="form-input" required></td>
                 </tr>
                 <tr>
+                    <td><label for="password">Password:</label></td>
+                    <td><input type="password" id="password" name="password" class="form-input" required></td>
+                </tr>
+                <tr>
                     <td><label for="nomor_telepon">Nomor Telepon:</label></td>
                     <td><input type="text" id="nomor_telepon" name="nomor_telepon" class="form-input" required></td>
                 </tr>
@@ -93,11 +97,10 @@
                     </td>
                 </tr>
             </table>
-            <tr>
-                <td class="form-table-actions">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </td>
-            </tr>
+            <div class="form-table-actions" style="text-align: center; margin-top: 20px;">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                <a href="{{ route('employees.index') }}" class="btn btn-secondary">Kembali</a>
+            </div>
         </form>
     @endsection
 </body>

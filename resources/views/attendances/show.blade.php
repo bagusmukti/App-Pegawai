@@ -27,6 +27,6 @@
             </tr>
         </table>
         <div class="detail-actions">
-            <a href="{{ route('attendance.index') }}" class="btn btn-secondary">Kembali ke Daftar</a>
+            <a href="{{ route('admin.attendance.index') }}" class="btn btn-secondary">Kembali ke Daftar</a>
         </div>
     @endsection

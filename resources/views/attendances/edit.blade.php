@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form class="form-container" action="{{ route('attendance.update', $attendance->id) }}" method="POST">
+        <form class="form-container" action="{{ route('admin.attendance.update', $attendance->id) }}" method="POST">
             @csrf
             @method('PUT')
             <table class="form-table">
@@ -71,6 +71,9 @@
                         <button type="submit" class="btn btn-primary">Update</button>
                     </td>
                 </tr>
+                <div class="detail-actions">
+                    <a href="{{ route('admin.attendance.index') }}" class="btn btn-secondary">Kembali ke Daftar</a>
+                </div>
             </table>
         </form>
     @endsection

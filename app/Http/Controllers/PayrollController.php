@@ -7,6 +7,7 @@ use App\Models\Attendance;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class PayrollController extends Controller
 {
@@ -15,8 +16,13 @@ class PayrollController extends Controller
         $month = $request->month ?? date('m');
         $year = $request->year ?? date('Y');
 
-    // Ambil semua karyawan + relasi jabatan
-    $employees = Employee::with('position')->get();
+        // Ambil karyawan sesuai role
+        if (Auth::check() && Auth::user()->role === 'employee') {
+            $me = Employee::where('email', Auth::user()->email)->first();
+            $employees = $me ? collect([$me->load('position')]) : collect();
+        } else {
+            $employees = Employee::with('position')->get();
+        }
 
         $payrollData = [];
 
@@ -79,7 +85,12 @@ class PayrollController extends Controller
         $month = $request->month ?? date('m');
         $year = $request->year ?? date('Y');
 
-    $employees = Employee::with('position')->get();
+        if (Auth::check() && Auth::user()->role === 'employee') {
+            $me = Employee::where('email', Auth::user()->email)->first();
+            $employees = $me ? collect([$me->load('position')]) : collect();
+        } else {
+            $employees = Employee::with('position')->get();
+        }
 
         $payrollData = [];
 
@@ -139,4 +150,7 @@ class PayrollController extends Controller
 
         return $pdf->download("Rekap-Gaji-$month-$year.pdf");
     }
+
+    // Removed myPayroll; employee filtering handled in index/export
+
 }

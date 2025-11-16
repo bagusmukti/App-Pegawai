@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
@@ -13,8 +14,17 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        
-        $attendance = Attendance::with('employee')->latest()->paginate(5);
+        $query = Attendance::with('employee')->latest();
+        // Jika user role employee, filter hanya miliknya (berdasarkan email employee)
+        if (Auth::check() && Auth::user()->role === 'employee') {
+            $employee = Employee::where('email', Auth::user()->email)->first();
+            if ($employee) {
+                $query->where('karyawan_id', $employee->id);
+            } else {
+                $query->whereRaw('1=0'); // Tidak ada data jika mapping gagal
+            }
+        }
+        $attendance = $query->paginate(5);
         return view('attendances.index', compact('attendance'));
     }
 
@@ -40,15 +50,33 @@ class AttendanceController extends Controller
             'status_absensi'    => 'required|in:hadir,izin,sakit,alpha',
         ]);
         Attendance::create($request->all());
-        return redirect()->route('attendance.index');
+        
+        // Redirect berdasarkan role
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            return redirect()->route('admin.attendance.index')->with('success', 'Attendance berhasil ditambahkan!');
+        }
+        return redirect()->route('attendance.index')->with('success', 'Attendance berhasil ditambahkan!');
     }
 
     public function check(Request $request)
     {
-        $employeeId = $request->query('karyawan_id');
         $employees = Employee::all();
-
+        $employeeId = $request->query('karyawan_id');
         $todayAttendance = null;
+
+        // Jika user role employee, auto-select employee berdasarkan email
+        if (Auth::check() && Auth::user()->role === 'employee') {
+            $employee = Employee::where('email', Auth::user()->email)->first();
+            if ($employee) {
+                $employeeId = $employee->id;
+                $todayAttendance = Attendance::where('karyawan_id', $employeeId)
+                    ->whereDate('tanggal', now())
+                    ->first();
+            }
+            return view('attendances.check', compact('todayAttendance', 'employees', 'employeeId'));
+        }
+
+        // Untuk admin, bisa pilih karyawan
         if ($employeeId) {
             $todayAttendance = Attendance::where('karyawan_id', $employeeId)
                 ->whereDate('tanggal', now())
@@ -147,7 +175,12 @@ class AttendanceController extends Controller
         ]);
         $attendance = Attendance::findOrFail($id);
         $attendance->update($request->all());
-        return redirect()->route('attendance.index');
+        
+        // Redirect berdasarkan role
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            return redirect()->route('admin.attendance.index')->with('success', 'Attendance berhasil diupdate!');
+        }
+        return redirect()->route('attendance.index')->with('success', 'Attendance berhasil diupdate!');
     }
 
     /**
@@ -157,6 +190,12 @@ class AttendanceController extends Controller
     {
         $attendance = Attendance::findOrFail($id);
         $attendance->delete();
-        return redirect()->route('attendance.index');
+        
+        // Redirect berdasarkan role
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            return redirect()->route('admin.attendance.index')->with('success', 'Attendance berhasil dihapus!');
+        }
+        return redirect()->route('attendance.index')->with('success', 'Attendance berhasil dihapus!');
     }
+
 }

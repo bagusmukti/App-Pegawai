@@ -24,6 +24,10 @@
                 <td>Email</td>
                 <td><input type="email" name="email" class="form-input" value="{{ old('email', $employee->email) }}"></td>
             </tr>
+             <tr>
+                <td>Password</td>
+                <td><input type="password" name="password" class="form-input" value="{{ old('password', $employee->password) }}"></td>
+            </tr>
             <tr>
                 <td>Nomor Telepon</td>
                 <td><input type="text" name="nomor_telepon" class="form-input" value="{{ old('nomor_telepon', $employee->nomor_telepon) }}"></td>
@@ -73,6 +77,14 @@
                     </select>
                 </td>
             </tr>
+             <tr>
+                <td>Role</td>
+                <td>
+                    <select name="role" class="form-input">
+                    <option value="employee" {{ old('role', $employee->role) == 'employee' ? 'selected' : '' }}>Employee</option>
+                    </select>
+                </td>
+            </tr>
         </table>
             <tr>
                 <td></td>
@@ -80,6 +92,9 @@
                     <button type="submit" class="btn btn-primary">Update</button>
                 </td>
             </tr>
+             <div class="form-actions" style="text-align: left; max-width: 700px;">
+                <a href="{{ route('employees.index') }}" class="btn btn-secondary">Kembali ke Daftar</a>
+            </div>
     </form>
     @endsection
 </body>

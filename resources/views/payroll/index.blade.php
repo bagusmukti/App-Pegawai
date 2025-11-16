@@ -5,7 +5,7 @@
 
     <h1 class="page-title">Rekap Gaji Bulanan</h1>
 
-    <form method="GET" action="{{ route('payroll.index') }}" class="form-container" style="margin-bottom: 15px;">
+    <form method="GET" action="{{ auth()->user()->role === 'admin' ? route('admin.payroll.index') : route('payroll.index') }}" class="form-container" style="margin-bottom: 15px;">
         <table class="form-table">
             <tr>
                 <td><label for="month">Bulan</label></td>
@@ -29,7 +29,9 @@
                 <td></td>
                 <td class="form-table-actions">
                     <button class="btn btn-primary" type="submit">Terapkan</button>
-                    <a class="btn btn-secondary" href="{{ route('payroll.export.pdf', ['month'=>$month,'year'=>$year]) }}" target="_blank">Export PDF</a>
+                    @if(auth()->user()->role === 'admin')
+                        <a class="btn btn-secondary" href="{{ route('admin.payroll.export', ['month'=>$month,'year'=>$year]) }}" target="_blank">Export PDF</a>
+                    @endif
                 </td>
             </tr>
         </table>

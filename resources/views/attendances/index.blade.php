@@ -4,8 +4,12 @@
     @section('content')
 
         <h1 class="page-title">Daftar Kehadiran Karyawan</h1>
-    <a href="{{ route('attendance.create') }}" class="btn btn-primary">Add Attendance</a>
+    @if(auth()->user()->role === 'admin')
+    <a href="{{ route('admin.attendance.create') }}" class="btn btn-primary">Add Attendance</a>
+    <a href="{{ route('admin.attendance.check') }}" class="btn btn-secondary">Check Attendance (Hari Ini)</a>
+    @else
     <a href="{{ route('attendance.check') }}" class="btn btn-secondary">Check Attendance (Hari Ini)</a>
+    @endif
         <table class="styled-table">
             <thead>
                 <tr>
@@ -27,17 +31,22 @@
                         <td>{{ $attemployee->status_absensi }}</td>
                         <td>
                             <div class="action-cell">
-                                <a href="{{ route('attendance.show', $attemployee->id) }}"
+                                @if(auth()->user()->role === 'admin')
+                                <a href="{{ route('admin.attendance.show', $attemployee->id) }}"
                                     class="action-link-detail">Detail</a> |
-                                <a href="{{ route('attendance.edit', $attemployee->id) }}" class="action-link-edit">Edit</a>
+                                <a href="{{ route('admin.attendance.edit', $attemployee->id) }}" class="action-link-edit">Edit</a>
                                 |
-                                <form action="{{ route('attendance.destroy', $attemployee->id) }}" method="POST"
-                                    style="display::inline;">
+                                <form action="{{ route('admin.attendance.destroy', $attemployee->id) }}" method="POST"
+                                    style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"
                                         onclick="return confirm('Yakin ingin menghapus?')">Delete</button>
                                 </form>
+                                @else
+                                {{-- Employee hanya bisa lihat detail, tidak bisa edit/delete --}}
+                                <span class="badge badge-info">View Only</span>
+                                @endif
                             </div>
                         </td>
                     </tr>
