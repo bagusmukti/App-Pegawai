@@ -27,7 +27,7 @@
                         <li><a href="{{ route('positions.index') }}"><i class="fas fa-briefcase"></i> Positions</a></li>
                         <li><a href="{{ route('admin.attendance.index') }}"><i class="fas fa-clipboard-list"></i> Attendance List</a></li>
                         <li><a href="{{ route('admin.attendance.check') }}"><i class="fas fa-check-circle"></i> Attendance Check</a></li>
-                        <li><a href="{{ route('salaries.index') }}"><i class="fas fa-money-bill-wave"></i> Salaries</a></li>
+                        {{-- <li><a href="{{ route('salaries.index') }}"><i class="fas fa-money-bill-wave"></i> Salaries</a></li> --}}
                         <li><a href="{{ route('admin.payroll.index') }}"><i class="fas fa-file-invoice-dollar"></i> Payroll</a></li>
                     @else
                         <li><a href="{{ route('attendance.check') }}"><i class="fas fa-check-circle"></i> Attendance Check</a></li>

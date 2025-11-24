@@ -47,7 +47,7 @@
                 </tr>
                 <tr>
                     <td><label for="gaji_pokok">Gaji Pokok:</label></td>
-                    <td><input type="text" id="gaji_pokok" name="gaji_pokok" class="form-input" readonly></td>
+                    <td><input type="text" id="gaji_pokok" name="gaji_pokok" class="form-input" ></td>
                 </tr>
                 {{-- <tr>
                     <td><label for="tunjangan">Tunjangan:</label></td>

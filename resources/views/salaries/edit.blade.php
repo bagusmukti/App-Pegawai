@@ -40,7 +40,7 @@
                 </tr>
                 <tr>
                     <td>Gaji Pokok</td>
-                    <td><input type="text" name="gaji_pokok" id="gaji_pokok" class="form-input" readonly
+                    <td><input type="text" name="gaji_pokok" id="gaji_pokok" class="form-input" 
                             value="{{ old('gaji_pokok', $salaries->gaji_pokok) }}"></td>
                 </tr>
                 {{-- <tr>

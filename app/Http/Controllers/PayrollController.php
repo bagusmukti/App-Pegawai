@@ -28,8 +28,8 @@ class PayrollController extends Controller
 
         $workStart = config('payroll.work_start');
         $workEnd   = config('payroll.work_end');
-        $lateRate  = (int) config('payroll.late_deduction_per_min');
-        $overRate  = (int) config('payroll.overtime_allow_per_min');
+        $lateDeductionPer15Min = (int) config('payroll.late_deduction_per_15min');
+        $overtimePercentagePerHour = (float) config('payroll.overtime_percentage_per_hour');
 
         foreach ($employees as $employee) {
             $attendances = Attendance::where('karyawan_id', $employee->id)
@@ -39,29 +39,34 @@ class PayrollController extends Controller
                 ->get(['tanggal','waktu_masuk','waktu_keluar']);
 
             $daysPresent = $attendances->count();
-            $lateMinutes = 0;
-            $overtimeMinutes = 0;
+            $totalLateMinutes = 0;
+            $totalOvertimeHours = 0;
 
             foreach ($attendances as $a) {
                 if ($a->waktu_masuk) {
                     $in = Carbon::createFromFormat('H:i:s', $a->waktu_masuk);
                     $start = Carbon::createFromFormat('H:i:s', $workStart);
                     if ($in->greaterThan($start)) {
-                        $lateMinutes += $start->diffInMinutes($in);
+                        $totalLateMinutes += $start->diffInMinutes($in);
                     }
                 }
                 if ($a->waktu_keluar) {
                     $out = Carbon::createFromFormat('H:i:s', $a->waktu_keluar);
                     $end = Carbon::createFromFormat('H:i:s', $workEnd);
                     if ($out->greaterThan($end)) {
-                        $overtimeMinutes += $end->diffInMinutes($out);
+                        $overtimeMinutes = $end->diffInMinutes($out);
+                        $totalOvertimeHours += floor($overtimeMinutes / 60); // Hitung per jam penuh
                     }
                 }
             }
 
-            $potongan = $lateMinutes * $lateRate;
-            $tunjangan = $overtimeMinutes * $overRate;
+            // Potongan: setiap kelipatan 15 menit = Rp 50.000
+            $lateIntervals = floor($totalLateMinutes / 15);
+            $potongan = $lateIntervals * $lateDeductionPer15Min;
+            
+            // Tunjangan: setiap jam penuh = 5% dari gaji pokok
             $gajiPokok = (int) ($employee->position->gaji_pokok ?? 0);
+            $tunjangan = $totalOvertimeHours * ($gajiPokok * $overtimePercentagePerHour);
             $totalSalary = max(0, $gajiPokok + $tunjangan - $potongan);
 
             $payrollData[] = [
@@ -69,8 +74,9 @@ class PayrollController extends Controller
                 'jabatan' => $employee->position->nama_jabatan ?? '-',
                 'gaji_pokok' => $gajiPokok,
                 'hari_hadir' => $daysPresent,
-                'menit_terlambat' => $lateMinutes,
-                'menit_lembur' => $overtimeMinutes,
+                'menit_terlambat' => $totalLateMinutes,
+                'kelipatan_15_menit' => $lateIntervals,
+                'jam_lembur' => $totalOvertimeHours,
                 'potongan' => $potongan,
                 'tunjangan' => $tunjangan,
                 'total_gaji_bulanan' => $totalSalary,
@@ -96,8 +102,8 @@ class PayrollController extends Controller
 
         $workStart = config('payroll.work_start');
         $workEnd   = config('payroll.work_end');
-        $lateRate  = (int) config('payroll.late_deduction_per_min');
-        $overRate  = (int) config('payroll.overtime_allow_per_min');
+        $lateDeductionPer15Min = (int) config('payroll.late_deduction_per_15min');
+        $overtimePercentagePerHour = (float) config('payroll.overtime_percentage_per_hour');
 
         foreach ($employees as $employee) {
             $attendances = Attendance::where('karyawan_id', $employee->id)
@@ -107,29 +113,34 @@ class PayrollController extends Controller
                 ->get(['tanggal','waktu_masuk','waktu_keluar']);
 
             $daysPresent = $attendances->count();
-            $lateMinutes = 0;
-            $overtimeMinutes = 0;
+            $totalLateMinutes = 0;
+            $totalOvertimeHours = 0;
 
             foreach ($attendances as $a) {
                 if ($a->waktu_masuk) {
                     $in = Carbon::createFromFormat('H:i:s', $a->waktu_masuk);
                     $start = Carbon::createFromFormat('H:i:s', $workStart);
                     if ($in->greaterThan($start)) {
-                        $lateMinutes += $start->diffInMinutes($in);
+                        $totalLateMinutes += $start->diffInMinutes($in);
                     }
                 }
                 if ($a->waktu_keluar) {
                     $out = Carbon::createFromFormat('H:i:s', $a->waktu_keluar);
                     $end = Carbon::createFromFormat('H:i:s', $workEnd);
                     if ($out->greaterThan($end)) {
-                        $overtimeMinutes += $end->diffInMinutes($out);
+                        $overtimeMinutes = $end->diffInMinutes($out);
+                        $totalOvertimeHours += floor($overtimeMinutes / 60); // Hitung per jam penuh
                     }
                 }
             }
 
-            $potongan = $lateMinutes * $lateRate;
-            $tunjangan = $overtimeMinutes * $overRate;
+            // Potongan: setiap kelipatan 15 menit = Rp 50.000
+            $lateIntervals = floor($totalLateMinutes / 15);
+            $potongan = $lateIntervals * $lateDeductionPer15Min;
+            
+            // Tunjangan: setiap jam penuh = 5% dari gaji pokok
             $gajiPokok = (int) ($employee->position->gaji_pokok ?? 0);
+            $tunjangan = $totalOvertimeHours * ($gajiPokok * $overtimePercentagePerHour);
             $totalSalary = max(0, $gajiPokok + $tunjangan - $potongan);
 
             $payrollData[] = [
@@ -137,8 +148,9 @@ class PayrollController extends Controller
                 'jabatan' => $employee->position->nama_jabatan ?? '-',
                 'gaji_pokok' => $gajiPokok,
                 'hari_hadir' => $daysPresent,
-                'menit_terlambat' => $lateMinutes,
-                'menit_lembur' => $overtimeMinutes,
+                'menit_terlambat' => $totalLateMinutes,
+                'kelipatan_15_menit' => $lateIntervals,
+                'jam_lembur' => $totalOvertimeHours,
                 'potongan' => $potongan,
                 'tunjangan' => $tunjangan,
                 'total_gaji_bulanan' => $totalSalary,
