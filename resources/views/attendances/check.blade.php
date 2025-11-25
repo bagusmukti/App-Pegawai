@@ -1,5 +1,6 @@
 @extends('master')
 
+@section('page-title', 'Presensi')
 @section('content')
 <div class="container mt-4">
     <h1 class="page-title">Cek Kehadiran Hari Ini</h1>

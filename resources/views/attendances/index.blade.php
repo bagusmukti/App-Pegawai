@@ -1,6 +1,6 @@
 @extends('master')
     @section('title', 'Daftar Kehadiran Pegawai')
-    @section('page-title', 'Daftar Absensi')
+    @section('page-title', 'Daftar Presensi')
     @section('content')
 
         <h1 class="page-title">Daftar Kehadiran Karyawan</h1>

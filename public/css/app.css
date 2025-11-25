@@ -454,3 +454,49 @@ footer {
         gap: 5px;
     }
 }
+
+/* Announcements Styling */
+.announcements-container {
+    margin-top: 20px;
+}
+
+.announcement-card {
+    transition: box-shadow 0.2s ease;
+}
+
+.announcement-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.announcement-header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.btn-sm {
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.empty-state {
+    background: #f8f9fa;
+    border: 1px dashed #dee2e6;
+    border-radius: 8px;
+}
+
+.announcement-detail {
+    max-width: 800px;
+}
+
+.announcement-meta {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid #007bff;
+}

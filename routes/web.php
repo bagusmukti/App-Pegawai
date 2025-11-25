@@ -5,6 +5,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PositionsController;
 use App\Http\Controllers\SalariesController;
 use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\AnnouncementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
@@ -60,6 +61,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // Payroll routes untuk admin
     Route::get('/admin/payroll', [PayrollController::class, 'index'])->name('admin.payroll.index');
     Route::get('/admin/payroll/export/pdf', [PayrollController::class, 'exportPdf'])->name('admin.payroll.export');
+    
+    // Announcements routes untuk admin (CRUD lengkap)
+    Route::resource('/admin/announcements', AnnouncementController::class, [
+        'names' => [
+            'index' => 'admin.announcements.index',
+            'create' => 'admin.announcements.create',
+            'store' => 'admin.announcements.store',
+            'show' => 'admin.announcements.show',
+            'edit' => 'admin.announcements.edit',
+            'update' => 'admin.announcements.update',
+            'destroy' => 'admin.announcements.destroy'
+        ]
+    ]);
 });
 
 // Employee routes - Limited access
@@ -71,6 +85,10 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
     
     // Payroll untuk employee (hanya lihat milik sendiri)
     Route::get('/my-payroll', [PayrollController::class, 'index'])->name('payroll.index');
+    
+    // Announcements routes untuk employee (read-only)
+    Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
+    Route::get('/announcements/{id}', [AnnouncementController::class, 'show'])->name('announcements.show');
 });
 
 // login
