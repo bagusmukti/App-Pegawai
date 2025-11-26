@@ -23,6 +23,12 @@ class Employee extends Model
     ];
 
     protected $hidden = ['password'];
+    
+    // Accessor untuk nama (agar bisa pakai $employee->name)
+    public function getNameAttribute()
+    {
+        return $this->nama_lengkap;
+    }
 
     //Relasi ke Department
     public function department()

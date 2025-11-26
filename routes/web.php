@@ -6,6 +6,7 @@ use App\Http\Controllers\PositionsController;
 use App\Http\Controllers\SalariesController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\MoodTrackerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
@@ -74,6 +75,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             'destroy' => 'admin.announcements.destroy'
         ]
     ]);
+    
+    // Mood Tracker routes untuk admin (analytics & management)
+    Route::get('/admin/mood-tracker', [MoodTrackerController::class, 'index'])->name('admin.mood-tracker.index');
+    Route::get('/admin/mood-tracker/{id}', [MoodTrackerController::class, 'show'])->name('admin.mood-tracker.show');
+    Route::delete('/admin/mood-tracker/{id}', [MoodTrackerController::class, 'destroy'])->name('admin.mood-tracker.destroy');
 });
 
 // Employee routes - Limited access
@@ -89,6 +95,11 @@ Route::middleware(['auth', 'role:employee'])->group(function () {
     // Announcements routes untuk employee (read-only)
     Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
     Route::get('/announcements/{id}', [AnnouncementController::class, 'show'])->name('announcements.show');
+    
+    // Mood Tracker routes untuk employee (input & view own moods)
+    Route::resource('mood-tracker', MoodTrackerController::class, [
+        'except' => ['destroy'] // Employee tidak bisa delete mood entries
+    ]);
 });
 
 // login
