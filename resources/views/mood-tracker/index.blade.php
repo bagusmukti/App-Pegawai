@@ -117,12 +117,12 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header text-center">
                     <h5 class="mb-0">
                         @if(Auth::user()->role === 'admin')
-                            <i class="fas fa-table"></i> Team Mood Entries
+                            Mood Karyawan
                         @else
-                            <i class="fas fa-history"></i> My Mood History
+                            My Mood History
                         @endif
                     </h5>
                 </div>
@@ -252,8 +252,9 @@
 </div>
 
 <style>
+/* Mood Tracker Specific Styles - Matching App Theme */
 .mood-1 { background-color: #dc3545; color: white; }
-.mood-2 { background-color: #fd7e14; color: white; }
+.mood-2 { background-color: #F87B1B; color: white; }
 .mood-3 { background-color: #ffc107; color: black; }
 .mood-4 { background-color: #20c997; color: white; }
 .mood-5 { background-color: #28a745; color: white; }
@@ -268,18 +269,80 @@
 }
 
 .workload-dot.active {
-    color: #007bff;
+    color: #11224E;
 }
 
 .card {
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-    border: 1px solid rgba(0, 0, 0, 0.125);
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #EEEEEE;
+    box-shadow: none;
+}
+
+.card-header {
+    background-color: #11224E;
+    color: white;
+    border-bottom: 3px solid #F87B1B;
+    border-radius: 8px 8px 0 0;
+}
+
+.btn-group .btn {
+    border: 1px solid #11224E;
+    color: #11224E;
+    background: white;
+}
+
+.btn-group .btn:hover {
+    background-color: #EEEEEE;
 }
 
 .btn-group .btn.active {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #11224E;
+    border-color: #11224E;
     color: white;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-warning {
+    background-color: #F87B1B;
+    border-color: #F87B1B;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #d46a16;
+    border-color: #d46a16;
+}
+
+.table {
+    color: #333;
+}
+
+.table th {
+    background-color: #11224E;
+    color: white;
+    border-color: #EEEEEE;
+}
+
+.table td {
+    border-color: #EEEEEE;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+.badge-pill {
+    padding: 6px 12px;
+    font-weight: bold;
 }
 </style>
 
